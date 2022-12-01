@@ -1,0 +1,51 @@
+package br.com.microinfor.planodesaude.model;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+public class Plano {
+	
+	/*
+	 * Cdastro do Plano, Nome de referencia e venda 
+	 */
+
+	@EqualsAndHashCode.Include
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(nullable = false, length = 100)
+	private String nome;
+
+	@Column(nullable = false, length = 1)
+	private String ativo;
+
+	@CreationTimestamp
+	@Column(nullable = false, columnDefinition = "datetime")
+	private LocalDateTime datacadastro;
+
+	@UpdateTimestamp
+	@Column(nullable = false, columnDefinition = "datetime")
+	private LocalDateTime dataatualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "clientesegurado_id", nullable = false)
+	private ClienteSegurado clienteSegurado;
+
+}
